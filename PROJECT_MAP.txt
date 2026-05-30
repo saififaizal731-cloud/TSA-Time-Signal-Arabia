@@ -1,0 +1,353 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    TSA TIME SIGNAL ARABIA - PROJECT MAP                      ║
+║                                                                              ║
+║                   Complete E-Commerce Website Structure                     ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+┌─ FRONTEND (Customer-Facing Website) ──────────────────────────────────────┐
+│                                                                             │
+│  public/
+│  │
+│  ├─ index.html ..................... Main website page (HTML)             │
+│  │   • Navigation bar with search                                          │
+│  │   • Product grid display                                                │
+│  │   • Shopping cart modal                                                 │
+│  │   • User account modal                                                  │
+│  │   • Checkout modal                                                      │
+│  │   • Product details modal                                               │
+│  │   • Footer with links                                                   │
+│  │                                                                         │
+│  ├─ style.css ....................... Complete styling (CSS3)             │
+│  │   • Responsive grid layout                                              │
+│  │   • Mobile/tablet/desktop breakpoints                                   │
+│  │   • Modal styling                                                       │
+│  │   • Product cards design                                                │
+│  │   • Form styling                                                        │
+│  │                                                                         │
+│  └─ app.js .......................... Frontend logic (JavaScript)          │
+│      • Load & display products                                             │
+│      • Search & filter products                                            │
+│      • User registration & login                                           │
+│      • Shopping cart management                                            │
+│      • Add to wishlist                                                     │
+│      • Checkout process                                                    │
+│      • API calls to backend                                                │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─ BACKEND API (Node.js/Express) ───────────────────────────────────────────┐
+│                                                                             │
+│  server.js ....................... Main Express server setup              │
+│  │   • Middleware configuration                                            │
+│  │   • Database connection                                                 │
+│  │   • CORS enabled                                                        │
+│  │   • Static file serving                                                 │
+│  │   • Route registration                                                  │
+│  │                                                                         │
+│  routes/
+│  │
+│  ├─ products.js ................... Product Management APIs               │
+│  │   ├─ GET /api/products ......... Get all products (with filters)       │
+│  │   ├─ GET /api/products/:id .... Get single product                    │
+│  │   ├─ POST /api/products ....... Create new product (admin)            │
+│  │   ├─ PUT /api/products/:id .... Update product (admin)                │
+│  │   └─ DELETE /api/products/:id . Delete product (admin)                │
+│  │                                                                         │
+│  ├─ users.js ..................... User Management APIs                   │
+│  │   ├─ POST /api/users/register . Create new user account               │
+│  │   ├─ POST /api/users/login .... Authenticate user                     │
+│  │   ├─ GET /api/users/:id ....... Get user profile                      │
+│  │   └─ POST /api/users/:id/wishlist/: Add to wishlist                   │
+│  │                                                                         │
+│  ├─ cart.js ....................... Shopping Cart APIs                    │
+│  │   ├─ POST /api/cart/add ....... Add item to cart                      │
+│  │   ├─ GET /api/cart/:userId .... Get user's cart                       │
+│  │   ├─ POST /api/cart/remove/... Remove item from cart                  │
+│  │   └─ POST /api/cart/clear/... Clear entire cart                       │
+│  │                                                                         │
+│  └─ orders.js ..................... Order Management APIs                 │
+│      ├─ POST /api/orders/create .. Create new order                      │
+│      ├─ GET /api/orders/:userId .. Get user's orders                     │
+│      └─ GET /api/orders/order/:id Get specific order                     │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─ DATABASE (MongoDB Schemas) ──────────────────────────────────────────────┐
+│                                                                             │
+│  models/
+│  │
+│  ├─ Product.js .................... Product Collection                    │
+│  │   • name (String) .............. Product name                           │
+│  │   • category (String) .......... Product category                      │
+│  │   • price (Number) ............. Product price in SAR                   │
+│  │   • description (String) ....... Full description                      │
+│  │   • specifications (Object) .... Tech specs                             │
+│  │   • brand (String) ............. Brand name                             │
+│  │   • stock (Number) ............. Available units                        │
+│  │   • rating (Number) ............ Customer rating                       │
+│  │   • featured (Boolean) ......... Featured product                      │
+│  │   • bestseller (Boolean) ....... Best seller flag                      │
+│  │   • reviews (Array) ............ Customer reviews                      │
+│  │   • createdAt (Date) ........... Creation timestamp                    │
+│  │                                                                         │
+│  ├─ User.js ....................... User Collection                       │
+│  │   • name (String) .............. Full name                              │
+│  │   • email (String) ............. Email address (unique)                 │
+│  │   • password (String) .......... Hashed password                       │
+│  │   • phone (String) ............. Phone number                           │
+│  │   • address (String) ........... Shipping address                      │
+│  │   • city (String) .............. City name                              │
+│  │   • country (String) ........... Country name                           │
+│  │   • role (String) .............. Customer or Admin                      │
+│  │   • wishlist (Array) ........... Saved products                        │
+│  │   • createdAt (Date) ........... Registration date                     │
+│  │                                                                         │
+│  ├─ Cart.js ....................... Cart Collection                       │
+│  │   • userId (ObjectId) .......... User reference                        │
+│  │   • items (Array) .............. Cart items with qty                   │
+│  │   • total (Number) ............. Cart total                             │
+│  │   • createdAt (Date) ........... Creation date                         │
+│  │                                                                         │
+│  └─ Order.js ...................... Order Collection                      │
+│      • userId (ObjectId) .......... User reference                        │
+│      • items (Array) .............. Products ordered                      │
+│      • totalAmount (Number) ....... Order total                            │
+│      • orderNumber (String) ....... Unique order number                   │
+│      • shippingAddress (String) ... Delivery address                      │
+│      • status (String) ............ Order status                           │
+│      • paymentStatus (String) ..... Payment status                        │
+│      • createdAt (Date) ........... Order date                             │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─ CONFIGURATION FILES ─────────────────────────────────────────────────────┐
+│                                                                             │
+│  package.json ..................... Node dependencies                     │
+│  • express ....................... Web framework                          │
+│  • mongoose ...................... MongoDB connector                      │
+│  • bcryptjs ...................... Password hashing                       │
+│  • jsonwebtoken .................. JWT authentication                     │
+│  • cors .......................... Cross-origin support                   │
+│                                                                             │
+│  .env ............................ Environment variables                  │
+│  • PORT=5000 ..................... Server port                            │
+│  • MONGODB_URI ................... Database connection                    │
+│  • NODE_ENV ...................... Development/production                 │
+│  • JWT_SECRET .................... Authentication key                     │
+│                                                                             │
+│  .gitignore ...................... Git ignore rules                       │
+│  • node_modules/ ................. Dependencies folder                    │
+│  • .env .......................... Sensitive data                         │
+│  • *.log ......................... Log files                               │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─ UTILITIES & SCRIPTS ─────────────────────────────────────────────────────┐
+│                                                                             │
+│  seed-data.js ..................... Add sample products                    │
+│  • Creates 12 networking products                                          │
+│  • Inserts into MongoDB                                                    │
+│  • Ready for testing                                                       │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─ DOCUMENTATION ───────────────────────────────────────────────────────────┐
+│                                                                             │
+│  START_HERE.txt ................... Project overview                      │
+│  QUICK_START.md ................... 2-minute setup guide                  │
+│  SETUP_GUIDE.md ................... Complete installation guide           │
+│  README.md ........................ Project overview & APIs                │
+│  FEATURES.md ...................... Complete features list                │
+│  ADMIN_GUIDE.md ................... Admin & API reference                 │
+│  API_EXAMPLES.md .................. Testing examples (cURL, Postman)      │
+│  DEPLOYMENT.md .................... Production deployment guide           │
+│  PROJECT_MAP.txt .................. This file                             │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                          DATA FLOW ARCHITECTURE                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+USER JOURNEY:
+────────────
+
+1. BROWSE PRODUCTS
+   Browser (index.html)
+   ↓
+   app.js (loadProducts)
+   ↓
+   API GET /api/products
+   ↓
+   server.js → routes/products.js
+   ↓
+   MongoDB (Product collection)
+   ↓
+   JSON response → app.js displayProducts()
+   ↓
+   HTML rendered
+
+
+2. USER AUTHENTICATION
+   Browser (Register form)
+   ↓
+   app.js (handleRegister)
+   ↓
+   API POST /api/users/register
+   ↓
+   server.js → routes/users.js
+   ↓
+   Password hashed (bcryptjs)
+   ↓
+   MongoDB (User saved)
+   ↓
+   JWT token generated
+   ↓
+   Token stored in localStorage
+   ↓
+   Redirected to shop
+
+
+3. SHOPPING CART
+   app.js (addToCart)
+   ↓
+   API POST /api/cart/add
+   ↓
+   server.js → routes/cart.js
+   ↓
+   MongoDB (Cart collection)
+   ↓
+   Total calculated
+   ↓
+   Response to browser
+   ↓
+   Cart updated
+
+
+4. CHECKOUT
+   Browser (Checkout form)
+   ↓
+   app.js (placeOrder)
+   ↓
+   API POST /api/orders/create
+   ↓
+   server.js → routes/orders.js
+   ↓
+   MongoDB (Order saved)
+   ↓
+   Cart cleared
+   ↓
+   Order number generated
+   ↓
+   Confirmation displayed
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                      TECHNOLOGY STACK SUMMARY                               ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+FRONTEND (Client-Side):
+├─ HTML5 ........................ Markup
+├─ CSS3 ......................... Styling (Responsive Grid)
+└─ JavaScript ................... Interactivity & API calls
+
+BACKEND (Server-Side):
+├─ Node.js ...................... Runtime
+├─ Express.js ................... Web framework
+├─ Mongoose ..................... MongoDB connector
+├─ bcryptjs ..................... Password hashing
+└─ jsonwebtoken ................. JWT authentication
+
+DATABASE:
+└─ MongoDB ...................... NoSQL database
+
+DEVOPS:
+├─ npm .......................... Package manager
+├─ Git .......................... Version control
+├─ PM2 (future) ................. Process manager
+└─ Nginx (future) ............... Web server
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                           FEATURE CHECKLIST                                 ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+CORE FEATURES:
+✅ Product catalog with 10+ categories
+✅ Search & filtering
+✅ User registration & login
+✅ Shopping cart
+✅ Wishlist
+✅ Order placement
+✅ User profiles
+✅ Product details
+
+ADMIN FEATURES (API Ready):
+✅ Create products
+✅ Update products
+✅ Delete products
+✅ Manage inventory
+✅ View orders
+✅ View customers
+✅ Product analytics
+
+UI/UX:
+✅ Responsive design
+✅ Mobile-friendly
+✅ Professional styling
+✅ Smooth transitions
+✅ Error handling
+✅ Form validation
+✅ Loading states
+
+SECURITY:
+✅ Password hashing
+✅ JWT authentication
+✅ CORS protection
+✅ Input validation
+✅ SQL injection prevention
+✅ XSS protection
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                         QUICK REFERENCE GUIDE                               ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Start Server:
+  npm start
+  (runs on http://localhost:5000)
+
+Development Mode:
+  npm run dev
+  (auto-reloads on file changes)
+
+Add Sample Data:
+  node seed-data.js
+  (adds 12 products)
+
+View Database:
+  mongosh
+  use tsa-ecommerce
+  db.products.find()
+
+API Documentation:
+  See ADMIN_GUIDE.md for all endpoints
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+For detailed information, see:
+→ QUICK_START.md for immediate setup
+→ SETUP_GUIDE.md for complete guide
+→ ADMIN_GUIDE.md for API reference
+→ API_EXAMPLES.md for testing examples
+→ DEPLOYMENT.md for production setup
+
+═══════════════════════════════════════════════════════════════════════════════
