@@ -1,1 +1,1 @@
-// Placeholder for routes/products.js
+
